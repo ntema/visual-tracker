@@ -37,7 +37,8 @@ type HistorySession = Session & {
   summary?: { average_fps: number; frames_analyzed: number };
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://visual-tracker-llls.onrender.com";
 const initialTrackers: Tracker[] = [
   {
     name: "CSRT",

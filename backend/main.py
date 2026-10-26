@@ -591,9 +591,15 @@ SECRET_KEY = os.getenv("JWT_SECRET", "super-secret-key-change-in-production")
 ALGORITHM = "HS256"
 
 app = FastAPI(title="VisualTracker Studio API", version="1.3.0")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://visual-tracker.vercel.app",
+        os.getenv("FRONTEND_ORIGIN", "http://localhost:3000"),
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
