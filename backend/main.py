@@ -699,6 +699,10 @@ def tracker_factory(name: str):
 
 
 # --- Endpoints ---
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
