@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import LandingPage from "../components/LandingPage";
 
 type Tracker = {
   name: string;
@@ -74,7 +75,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
-
+  const [showAuth, setShowAuth] = useState(false);
   const [activeView, setActiveView] = useState<
     "workspace" | "sessions" | "benchmarks"
   >("workspace");
@@ -268,154 +269,32 @@ export default function Home() {
     }
   }
 
-  if (!token) {
+    if (!token) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          backgroundColor: "#f9f9f9",
+      <LandingPage
+        showAuth={showAuth}
+        authMode={authMode}
+        email={email}
+        password={password}
+        authError={authError}
+        busy={busy}
+        onOpenAuth={(mode) => {
+          setAuthMode(mode);
+          setAuthError("");
+          setShowAuth(true);
         }}
-      >
-        <form
-          onSubmit={handleAuth}
-          style={{
-            width: "100%",
-            maxWidth: "400px",
-            backgroundColor: "#fff",
-            padding: "2rem",
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-          }}
-        >
-          <div
-            className="brand"
-            style={{
-              justifyContent: "center",
-              marginBottom: "2rem",
-              color: "#111",
-            }}
-          >
-            <span className="brand-mark">V</span>
-            <span>
-              VisualTracker <b>Studio</b>
-            </span>
-          </div>
-          <h2
-            style={{
-              marginBottom: "1.5rem",
-              textAlign: "center",
-              fontSize: "20px",
-            }}
-          >
-            {authMode === "login"
-              ? "Sign in to your workspace"
-              : "Create a new account"}
-          </h2>
-          {authError && (
-            <div
-              style={{
-                backgroundColor: "#fff1f2",
-                color: "#e11d48",
-                padding: "10px",
-                borderRadius: "6px",
-                marginBottom: "1rem",
-                fontSize: "14px",
-                textAlign: "center",
-              }}
-            >
-              {authError}
-            </div>
-          )}
-          <label
-            style={{
-              display: "block",
-              marginBottom: "1rem",
-              fontSize: "14px",
-              fontWeight: "500",
-            }}
-          >
-            Email Address
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginTop: "5px",
-                border: "1px solid #ddd",
-                borderRadius: "6px",
-              }}
-            />
-          </label>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "1.5rem",
-              fontSize: "14px",
-              fontWeight: "500",
-            }}
-          >
-            Password
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginTop: "5px",
-                border: "1px solid #ddd",
-                borderRadius: "6px",
-              }}
-            />
-          </label>
-          <button
-            type="submit"
-            className="primary-button"
-            disabled={busy}
-            style={{ width: "100%", justifyContent: "center" }}
-          >
-            {busy
-              ? "Processing..."
-              : authMode === "login"
-                ? "Sign In"
-                : "Register"}
-          </button>
-          <p
-            style={{
-              textAlign: "center",
-              marginTop: "1rem",
-              fontSize: "14px",
-              color: "#666",
-            }}
-          >
-            {authMode === "login"
-              ? "Don't have an account? "
-              : "Already have an account? "}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setAuthMode(authMode === "login" ? "register" : "login");
-                setAuthError("");
-              }}
-              style={{
-                color: "var(--purple)",
-                fontWeight: "600",
-                textDecoration: "none",
-              }}
-            >
-              {authMode === "login" ? "Register here" : "Sign in here"}
-            </a>
-          </p>
-        </form>
-      </div>
+        onCloseAuth={() => {
+          setShowAuth(false);
+          setAuthError("");
+        }}
+        onEmailChange={setEmail}
+        onPasswordChange={setPassword}
+        onModeChange={(mode) => {
+          setAuthMode(mode);
+          setAuthError("");
+        }}
+        onSubmit={handleAuth}
+      />
     );
   }
 
