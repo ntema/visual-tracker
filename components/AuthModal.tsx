@@ -63,7 +63,7 @@ export default function AuthModal({
                 required
                 value={name}
                 onChange={(e) => onNameChange(e.target.value)}
-                placeholder="Emmanuel Ntekim"
+                placeholder="Full Name"
                 className="landing-input"
               />
             </label>
