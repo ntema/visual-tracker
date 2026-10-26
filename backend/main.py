@@ -616,6 +616,7 @@ except Exception as e:
 
 # --- Pydantic Models ---
 class UserCreate(BaseModel):
+    name: str
     email: str
     password: str
 
@@ -711,11 +712,14 @@ def health() -> dict[str, str]:
 def register(user: UserCreate):
     if users_col is None:
         raise HTTPException(status_code=503, detail="Database offline")
+    if not user.name.strip():
+        raise HTTPException(status_code=400, detail="Full name is required")
     if users_col.find_one({"email": user.email}):
         raise HTTPException(status_code=400, detail="Email already registered")
     
     users_col.insert_one({
         "_id": str(uuid4()),
+        "name": user.name.strip(),
         "email": user.email,
         "password_hash": get_password_hash(user.password),
         "created_at": datetime.now(timezone.utc)

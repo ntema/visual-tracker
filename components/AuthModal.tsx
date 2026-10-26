@@ -2,10 +2,12 @@
 
 type Props = {
   authMode: "login" | "register";
+  name: string;
   email: string;
   password: string;
   authError: string;
   busy: boolean;
+  onNameChange: (value: string) => void;
   onEmailChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
   onModeChange: (mode: "login" | "register") => void;
@@ -15,10 +17,12 @@ type Props = {
 
 export default function AuthModal({
   authMode,
+  name,
   email,
   password,
   authError,
   busy,
+  onNameChange,
   onEmailChange,
   onPasswordChange,
   onModeChange,
@@ -51,6 +55,20 @@ export default function AuthModal({
         {authError && <div className="landing-auth-error">{authError}</div>}
 
         <form onSubmit={onSubmit} className="landing-auth-form">
+          {authMode === "register" && (
+            <label className="landing-label">
+              Full Name
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => onNameChange(e.target.value)}
+                placeholder="Emmanuel Ntekim"
+                className="landing-input"
+              />
+            </label>
+          )}
+
           <label className="landing-label">
             Email Address
             <input

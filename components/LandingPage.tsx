@@ -5,12 +5,14 @@ import AuthModal from "./AuthModal";
 type Props = {
   showAuth: boolean;
   authMode: "login" | "register";
+  name: string;
   email: string;
   password: string;
   authError: string;
   busy: boolean;
   onOpenAuth: (mode: "login" | "register") => void;
   onCloseAuth: () => void;
+  onNameChange: (value: string) => void;
   onEmailChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
   onModeChange: (mode: "login" | "register") => void;
@@ -50,12 +52,14 @@ const trackers = [
 export default function LandingPage({
   showAuth,
   authMode,
+  name,
   email,
   password,
   authError,
   busy,
   onOpenAuth,
   onCloseAuth,
+  onNameChange,
   onEmailChange,
   onPasswordChange,
   onModeChange,
@@ -178,10 +182,12 @@ export default function LandingPage({
       {showAuth && (
         <AuthModal
           authMode={authMode}
+          name={name}
           email={email}
           password={password}
           authError={authError}
           busy={busy}
+          onNameChange={onNameChange}
           onEmailChange={onEmailChange}
           onPasswordChange={onPasswordChange}
           onModeChange={onModeChange}

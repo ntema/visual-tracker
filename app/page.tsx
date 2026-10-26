@@ -72,8 +72,9 @@ const initialTrackers: Tracker[] = [
 export default function Home() {
   const [token, setToken] = useState<string | null>(null);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+   const [name, setName] = useState("");
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [showAuth, setShowAuth] = useState(false);
   const [activeView, setActiveView] = useState<
@@ -138,11 +139,11 @@ export default function Home() {
     setBusy(true);
     try {
       if (authMode === "register") {
-        const res = await fetch(`${API_URL}/api/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+               const res = await fetch(`${API_URL}/api/auth/register`, {
+                 method: "POST",
+                 headers: { "Content-Type": "application/json" },
+                 body: JSON.stringify({ name, email, password }),
+               });
         if (!res.ok)
           throw new Error((await res.json()).detail || "Registration failed");
         setAuthMode("login");
@@ -282,19 +283,20 @@ export default function Home() {
           setAuthMode(mode);
           setAuthError("");
           setShowAuth(true);
-        }}
+        } }
         onCloseAuth={() => {
           setShowAuth(false);
           setAuthError("");
-        }}
+        } }
         onEmailChange={setEmail}
         onPasswordChange={setPassword}
         onModeChange={(mode) => {
           setAuthMode(mode);
           setAuthError("");
-        }}
-        onSubmit={handleAuth}
-      />
+        } }
+        onSubmit={handleAuth} name={""} onNameChange={function (value: string): void {
+          throw new Error("Function not implemented.");
+        } }      />
     );
   }
 
