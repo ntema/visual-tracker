@@ -6,7 +6,7 @@ opencv-contrib-python-headless==4.10.0.84
 pydantic-settings==2.7.1
 certifi
 dnspython
-PyJWT
-bcrypt
-passlib[bcrypt]
+PyJWT==2.8.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 pydantic
