@@ -4,3 +4,5 @@ python-multipart==0.0.20
 pymongo==4.10.1
 opencv-contrib-python-headless==4.10.0.84
 pydantic-settings==2.7.1
+certifi
+dnspython
